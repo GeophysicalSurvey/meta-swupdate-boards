@@ -1,0 +1,86 @@
+From d7326aa2d21a4ba7e9a3eed53fd0fc83be64b0ce Mon Sep 17 00:00:00 2001
+From: Jeremy Stashluk <stashlukj@geophysical.com>
+Date: Fri, 4 Aug 2017 18:59:38 +0000
+Subject: [PATCH] uboot: downgrade to 2013.10
+
+---
+ Makefile.flags     |  2 +-
+ bootloader/uboot.c | 14 ++++++++++++--
+ bootloader/uboot.h |  5 ++++-
+ 3 files changed, 17 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile.flags b/Makefile.flags
+index 391fc7f..2dc03f4 100644
+--- a/Makefile.flags
++++ b/Makefile.flags
+@@ -124,7 +124,7 @@ endif
+ 
+ # signed images require openssl (digest)
+ ifneq ($(CONFIG_HASH_VERIFY),)
+-LDLIBS += crypto ssl
++LDLIBS += crypto ssl m dl
+ endif
+ 
+ # signed images require openssl (digest)
+diff --git a/bootloader/uboot.c b/bootloader/uboot.c
+index 3b5a5ad..3362e9c 100644
+--- a/bootloader/uboot.c
++++ b/bootloader/uboot.c
+@@ -79,8 +79,12 @@ int bootloader_env_set(const char *name, const char *value)
+ 		return -1;
+ 	}
+ 	fw_env_write ((char *)name, (char *)value);
++#if 0
+ 	ret = fw_env_flush(fw_env_opts);
+ 	fw_env_close (fw_env_opts);
++#else
++	fw_env_close ();
++#endif
+ 
+ 	unlock_uboot_env(lock);
+ 
+@@ -111,9 +115,11 @@ char *bootloader_env_get(const char *name)
+ 	var = fw_getenv((char *)name);
+ 	if (var)
+ 		value = strdup(var);
+-
++#if 0
+ 	fw_env_close (fw_env_opts);
+-
++#else
++	fw_env_close ();
++#endif
+ 	unlock_uboot_env(lock);
+ 
+ 	return value;
+@@ -131,7 +137,11 @@ int bootloader_apply_list(const char *filename)
+ 	}
+ 
+ 	ret = fw_parse_script((char *)filename, fw_env_opts);
++#if 0
+ 	fw_env_close (fw_env_opts);
++#else
++	fw_env_close ();
++#endif
+ 	unlock_uboot_env(lockfd);
+ 	
+ 	return ret;
+diff --git a/bootloader/uboot.h b/bootloader/uboot.h
+index a794453..e045bcd 100644
+--- a/bootloader/uboot.h
++++ b/bootloader/uboot.h
+@@ -34,7 +34,10 @@ int fw_parse_script(char *fname, struct env_opts *opts);
+ char *fw_getenv(char *name);
+ int fw_env_open(struct env_opts *opts);
+ int fw_env_write(char *name, char *value);
++#if 0
+ int fw_env_close(struct env_opts *opts);
+ int fw_env_flush(struct env_opts *opts);
+-
++#else
++int fw_env_close(void);
++#endif
+ extern unsigned	long  crc32	 (unsigned long, const unsigned char *, unsigned);
+-- 
+1.9.1
+
