@@ -15,10 +15,10 @@ software =
 						compressed = true;
 					}
 				);
-                                bootenv: (
+                                uboot: (
                                         {
                                         	name = "mmc_root";
-						value = "/dev/mmcblk0p2";
+						value = "/dev/mmcblk0p2 rw";
                                         }
 				);
 
@@ -33,10 +33,10 @@ software =
 						compressed = true;
 					}
 				);
-                                bootenv: (
+                                uboot: (
                                         {
                                         	name = "mmc_root";
-						value = "/dev/mmcblk0p2";
+						value = "/dev/mmcblk0p3 rw";
                                         }
 				);
 			};
