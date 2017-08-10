@@ -26,7 +26,6 @@ SWUPDATE_IMAGES = " \
 
 # Images can have multiple formats - define which image must be
 # taken to be put in the compound image
-#SWUPDATE_IMAGES_FSTYPES[core-image-full-cmdline] = ".ext4.gz"
-SWUPDATE_IMAGES_FSTYPES[mitysom-335x-devkit] = ".ext4.gz"
+SWUPDATE_IMAGES_FSTYPES[mitysom-335x-devkit] = ".ext3.gz"
 
 COMPATIBLE = "mitysom-335x"
