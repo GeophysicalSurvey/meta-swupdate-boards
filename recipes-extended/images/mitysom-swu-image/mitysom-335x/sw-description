@@ -8,7 +8,7 @@ software =
 			copy1 : {
 				images: (
 					{
-						filename = "mitysom-335x-devkit-mitysom-335x.tar.bz2";
+						filename = "mitysom-335x-devkit-mitysom-335x.ext4.gz";
 						device = "/dev/mmcblk0p2";
 						type = "raw";
 						installed-directly = true;
@@ -26,7 +26,7 @@ software =
 			copy2 : {
 				images: (
 					{
-						filename = "mitysom-335x-devkit-mitysom-335x.tar.bz2";
+						filename = "mitysom-335x-devkit-mitysom-335x.ext4.gz";
 						device = "/dev/mmcblk0p3";
 						type = "raw";
 						installed-directly = true;
