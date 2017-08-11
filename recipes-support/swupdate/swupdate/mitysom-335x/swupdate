@@ -55,7 +55,7 @@ do_start() {
 		exit 1
 		;;
 	*)
-		rootfs=`mount | grep "on / type" | cut -d':' -f 2 | cut -d' ' -f 1`
+		rootfs=`grep -oh "root=\S\+" /proc/cmdline | cut -d'=' -f 2`
 
 		if [ $rootfs == '/dev/mmcblk0p2' ];then
 			selection="-e stable,copy2"
